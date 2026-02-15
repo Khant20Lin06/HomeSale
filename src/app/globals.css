@@ -1,8 +1,10 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f8fafc;
+  /* Slate 50 for light mode */
+  --foreground: #0f172a;
+  /* Slate 900 for text */
 }
 
 @theme inline {
@@ -14,13 +16,25 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #0f172a;
+    /* Slate 900 for dark mode */
+    --foreground: #f8fafc;
+    /* Slate 50 for text */
   }
 }
+
+:root.dark {
+  --background: #0f172a;
+  --foreground: #f8fafc;
+}
+
+
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
+
+/* Force light mode even if system prefers dark */
