@@ -91,7 +91,7 @@ export default function SalesPage() {
     return (
         <div className="flex h-[calc(100vh-theme(spacing.24))] gap-6">
             {/* Product List */}
-            <div className="flex-1 flex flex-col bg-white rounded-lg shadow-md overflow-hidden">
+            <div className="flex-1 flex flex-col bg-gray-600 rounded-lg shadow-md overflow-hidden">
                 <div className="p-4 border-b">
                     <div className="relative">
                         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -129,8 +129,8 @@ export default function SalesPage() {
             </div>
 
             {/* Cart */}
-            <div className="w-96 bg-white rounded-lg shadow-md flex flex-col">
-                <div className="p-4 border-b bg-gray-50">
+            <div className="w-96 bg-gray-600 rounded-lg shadow-md flex flex-col">
+                <div className="p-4 border-b bg-gray-600">
                     <h2 className="text-lg font-bold flex items-center">
                         <ShoppingCart className="w-5 h-5 mr-2" /> Current Order
                     </h2>
@@ -161,7 +161,7 @@ export default function SalesPage() {
                         ))
                     )}
                 </div>
-                <div className="p-4 border-t bg-gray-50">
+                <div className="p-4 border-t bg-gray-600">
                     <div className="flex justify-between items-center mb-4 text-xl font-bold">
                         <span>Total:</span>
                         <span>{totalAmount} Ks</span>

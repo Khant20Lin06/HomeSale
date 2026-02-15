@@ -2,6 +2,7 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import api from '../lib/api';
 import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
 
 const AuthContext = createContext();
 
@@ -10,12 +11,23 @@ export function AuthProvider({ children }) {
     const [loading, setLoading] = useState(true);
     const router = useRouter();
 
+
+
     useEffect(() => {
         const checkAuth = async () => {
-            const token = localStorage.getItem('token');
+            const token = Cookies.get('token'); // Check cookie instead of localStorage
             const savedUser = localStorage.getItem('user');
             if (token && savedUser) {
-                setUser(JSON.parse(savedUser));
+                try {
+                    setUser(JSON.parse(savedUser));
+                } catch (e) {
+                    // JSON parse error, clear everything
+                    Cookies.remove('token');
+                    localStorage.removeItem('user');
+                }
+            } else if (token && !savedUser) {
+                // Token exists but user data missing (loop condition)
+                Cookies.remove('token');
             }
             setLoading(false);
         };
@@ -25,7 +37,7 @@ export function AuthProvider({ children }) {
     const login = async (username, password) => {
         try {
             const { data } = await api.post('/auth/login', { username, password });
-            localStorage.setItem('token', data.token);
+            Cookies.set('token', data.token, { expires: 1 }); // Expires in 1 day
             localStorage.setItem('user', JSON.stringify(data.user));
             setUser(data.user);
             router.push('/dashboard');
@@ -36,7 +48,7 @@ export function AuthProvider({ children }) {
     };
 
     const logout = () => {
-        localStorage.removeItem('token');
+        Cookies.remove('token');
         localStorage.removeItem('user');
         setUser(null);
         router.push('/login');
